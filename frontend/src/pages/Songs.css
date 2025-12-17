@@ -1,0 +1,538 @@
+.songs-section {
+    padding: 40px 50px 120px 50px; /* Bottom padding for player */
+    /* Margin handled by layout */
+    max-width: 1600px;
+    margin: 0 auto;
+    color: white;
+}
+
+.songs-header {
+    margin-bottom: 30px;
+}
+
+.songs-header h1 {
+    font-size: 34px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.songs-header p {
+    color: #b3b3b3;
+    font-size: 14px;
+}
+
+/* --- Table Styles --- */
+.songs-table-header {
+    display: grid;
+    grid-template-columns: 50px 4fr 3fr 2fr 60px; /* Fixed columns */
+    padding: 0 16px 12px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    color: #b3b3b3;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.songs-table-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.songs-table-row {
+    display: grid;
+    grid-template-columns: 50px 4fr 3fr 2fr 60px;
+    padding: 10px 16px;
+    align-items: center;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-size: 14px;
+    color: #b3b3b3;
+}
+
+.songs-table-row:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+
+.songs-table-row:hover .td-title,
+.songs-table-row:hover .td-artist,
+.songs-table-row:hover .td-album {
+    color: white;
+}
+
+/* Index & Hover Play Button */
+.td-index {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center align index/play icon */
+    width: 20px;
+}
+
+.play-icon {
+    display: none;
+    color: white;
+}
+
+.songs-table-row:hover .index-num {
+    display: none;
+}
+
+.songs-table-row:hover .play-icon {
+    display: block;
+}
+
+/* Title Column */
+.td-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: white;
+    font-weight: 500;
+}
+
+.table-poster {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+/* Duration Column Alignment */
+.th-duration, .td-duration {
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+}
+/* Update .td-duration to handle the button */
+.td-duration {
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px; /* Space between time and button */
+}
+
+/* The Add Button */
+.add-btn {
+    background: transparent;
+    border: none;
+    color: #b3b3b3;
+    cursor: pointer;
+    opacity: 0; /* Hidden by default */
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 50%;
+}
+
+.add-btn:hover {
+    color: white;
+    background-color: rgba(255,255,255,0.1);
+    transform: scale(1.1);
+}
+
+/* Show button when hovering the row */
+.songs-table-row:hover .add-btn {
+    opacity: 1;
+}
+
+/* Hide duration text when hovering row (optional, like Spotify) */
+/* .songs-table-row:hover .duration-text {
+    display: none; 
+} */
+ /* ... existing styles ... */
+
+.td-duration {
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
+}
+
+.add-btn {
+    background: transparent;
+    border: none;
+    color: #b3b3b3;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 50%;
+}
+
+.add-btn:hover {
+    color: white;
+    background-color: rgba(255,255,255,0.1);
+    transform: scale(1.1);
+}
+
+.delete-btn {
+    background: transparent;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 50%;
+}
+
+.delete-btn:hover {
+    color: #ff4d4d;
+    background-color: rgba(255, 77, 77, 0.1);
+    transform: scale(1.1);
+}
+
+.songs-table-row:hover .add-btn,
+.songs-table-row:hover .delete-btn {
+    opacity: 1;
+}
+.songs-section {
+    padding: 40px 50px 120px 50px;
+    max-width: 1600px;
+    margin: 0 auto;
+    color: white;
+}
+
+.songs-header {
+    margin-bottom: 30px;
+}
+
+.songs-header h1 {
+    font-size: 34px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.songs-header p {
+    color: #b3b3b3;
+    font-size: 14px;
+}
+
+.songs-table-header {
+    display: grid;
+    grid-template-columns: 50px 4fr 3fr 2fr 100px; /* Increased last col width for buttons */
+    padding: 0 16px 12px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    color: #b3b3b3;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.songs-table-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.songs-table-row {
+    display: grid;
+    grid-template-columns: 50px 4fr 3fr 2fr 100px; /* Matched header */
+    padding: 10px 16px;
+    align-items: center;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-size: 14px;
+    color: #b3b3b3;
+}
+
+.songs-table-row:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+
+.songs-table-row:hover .td-title,
+.songs-table-row:hover .td-artist,
+.songs-table-row:hover .td-album {
+    color: white;
+}
+
+.td-index {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+}
+
+.play-icon { display: none; color: white; }
+.songs-table-row:hover .index-num { display: none; }
+.songs-table-row:hover .play-icon { display: block; }
+
+.td-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: white;
+    font-weight: 500;
+}
+
+.table-poster {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.th-duration, .td-duration {
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+}
+
+/* --- Action Buttons --- */
+.add-btn {
+    background: transparent;
+    border: none;
+    color: #b3b3b3;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 50%;
+}
+
+.add-btn:hover {
+    color: white;
+    background-color: rgba(255,255,255,0.1);
+    transform: scale(1.1);
+}
+
+.delete-btn {
+    background: transparent;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 50%;
+}
+
+.delete-btn:hover {
+    color: #ff4d4d;
+    background-color: rgba(255, 77, 77, 0.1);
+    transform: scale(1.1);
+}
+
+.songs-table-row:hover .add-btn,
+.songs-table-row:hover .delete-btn {
+    opacity: 1;
+}
+/* ... existing styles ... */
+
+/* New Artist Link Style */
+.artist-link {
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.artist-link:hover {
+    color: white;
+    text-decoration: underline;
+}
+.songs-section {
+    padding: 30px;
+    color: white;
+}
+
+.songs-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.search-input {
+    background: #1c1c1e;
+    border: 1px solid #333;
+    padding: 10px 15px;
+    border-radius: 8px;
+    color: white;
+    width: 250px;
+}
+
+.songs-table {
+    display: flex;
+    flex-direction: column;
+}
+
+.songs-table-header, .songs-table-row {
+    display: grid;
+    grid-template-columns: 50px 2fr 1.5fr 100px; /* Adjusted columns */
+    padding: 12px 10px;
+    align-items: center;
+    border-radius: 6px;
+}
+
+.songs-table-header {
+    color: #a0a0a0;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #333;
+    margin-bottom: 10px;
+}
+
+.songs-table-row {
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.songs-table-row:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.active-row {
+    color: #fa2d48;
+}
+
+.td-index {
+    display: flex;
+    justify-content: center;
+    color: #888;
+}
+
+.play-icon { display: none; }
+.songs-table-row:hover .index-num { display: none; }
+.songs-table-row:hover .play-icon { display: block; color: white; }
+
+.td-title {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-weight: 500;
+}
+
+.table-poster {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+/* NEW STYLES FOR ARTIST LINK & BUTTONS */
+.artist-link, .card-artist-link {
+    color: #b3b3b3;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.artist-link:hover, .card-artist-link:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+.td-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.action-btn {
+    background: transparent;
+    border: none;
+    color: #b3b3b3;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 50%;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.action-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.delete-btn:hover {
+    background: rgba(250, 45, 72, 0.15);
+    color: #fa2d48; /* Red for delete */
+}
+/* ... existing button styles ... */
+/* =========================================
+   MOBILE RESPONSIVE STYLES
+   (Only applies to screens smaller than 768px)
+   ========================================= */
+@media screen and (max-width: 768px) {
+
+    /* 1. Adjust Main Container Padding */
+    .songs-section {
+        padding: 20px 16px 120px 16px; /* Less padding on sides */
+    }
+
+    /* 2. Stack Header (Title top, Search bottom) */
+    .songs-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .search-input {
+        width: 100%; /* Full width search bar */
+        font-size: 16px; /* Prevent zoom on iOS */
+    }
+
+    /* 3. Hide the Table Header Row (Too cluttered for mobile) */
+    .songs-table-header {
+        display: none;
+    }
+
+    /* 4. Switch Row Layout from Grid to Flexbox */
+    .songs-table-row {
+        display: flex; /* Flexible layout */
+        align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Separator lines */
+    }
+
+    /* 5. Hide "Index" column to save space */
+    .td-index {
+        display: none;
+    }
+
+    /* 6. Hide "Artist" column (It gets too squished on mobile) */
+    /* Note: Ideally, you would modify JSX to stack Artist under Title, 
+       but hiding it is the cleanest CSS-only fix. */
+    .td-artist {
+        display: none;
+    }
+
+    /* 7. Title takes all available space */
+    .td-title {
+        flex: 1;
+        font-size: 15px;
+    }
+
+    /* 8. Make Buttons Always Visible (No Hover on Mobile) */
+    .add-btn, .delete-btn, .action-btn {
+        opacity: 1 !important; /* Force visible */
+        padding: 8px; /* Larger touch target */
+    }
+
+    /* 9. Adjust Actions spacing */
+    .td-actions {
+        gap: 2px;
+    }
+}

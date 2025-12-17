@@ -1,0 +1,216 @@
+.playlist-details-section {
+    padding: 40px 50px 120px 50px;
+    max-width: 1600px;
+    margin: 0 auto;
+    color: white;
+}
+
+.playlist-loading {
+    padding: 50px;
+    text-align: center;
+    color: #888;
+}
+
+.playlist-hero {
+    display: flex;
+    align-items: flex-end;
+    gap: 32px;
+    margin-bottom: 40px;
+}
+
+.playlist-cover-lg {
+    width: 232px;
+    height: 232px;
+    object-fit: cover;
+    box-shadow: 0 4px 60px rgba(0,0,0,0.5);
+    border-radius: 12px;
+}
+
+.playlist-meta {
+    display: flex;
+    flex-direction: column;
+}
+
+.playlist-type {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    color: white;
+}
+
+.playlist-title-lg {
+    font-size: 80px;
+    font-weight: 800;
+    margin: 0 0 12px 0;
+    line-height: 1;
+    letter-spacing: -2px;
+}
+
+.playlist-desc {
+    color: #b3b3b3;
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+
+.playlist-stats {
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+}
+
+.owner-name {
+    font-weight: 700;
+}
+
+.playlist-actions {
+    margin-bottom: 30px;
+}
+
+.play-big-btn {
+    width: 56px;
+    height: 56px;
+    background-color: #fa2d48;
+    border-radius: 50%;
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+}
+
+.play-big-btn:hover {
+    transform: scale(1.05);
+    background-color: #d61e38;
+}
+
+/* Table Styles */
+.songs-table-header {
+    display: grid;
+    grid-template-columns: 50px 4fr 3fr 2fr 60px;
+    padding: 0 16px 12px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    color: #b3b3b3;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.songs-table-row {
+    display: grid;
+    grid-template-columns: 50px 4fr 3fr 2fr 60px;
+    padding: 10px 16px;
+    align-items: center;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-size: 14px;
+    color: #b3b3b3;
+}
+
+.songs-table-row:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+
+.songs-table-row:hover .td-title { color: white; }
+
+.td-index {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+}
+
+.play-icon { display: none; color: white; }
+.songs-table-row:hover .index-num { display: none; }
+.songs-table-row:hover .play-icon { display: block; }
+
+.td-title {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: white;
+    font-weight: 500;
+}
+
+.table-poster {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.empty-playlist {
+    padding: 60px 0;
+    text-align: center;
+    color: white;
+}
+.empty-playlist span {
+    display: block;
+    margin-top: 8px;
+    font-size: 14px;
+    color: #b3b3b3;
+}
+/* ... existing styles ... */
+
+.playlist-details-section {
+    padding: 40px 50px 120px 50px;
+    max-width: 1600px;
+    margin: 0 auto;
+    color: white;
+}
+
+.playlist-hero {
+    display: flex;
+    align-items: flex-end;
+    gap: 32px;
+    margin-bottom: 40px;
+}
+
+/* ... other existing hero styles ... */
+
+/* NEW: Edit Button Styles */
+.edit-btn {
+    background: transparent;
+    border: none;
+    color: #b3b3b3;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.2s;
+}
+
+.edit-btn:hover {
+    color: white;
+    transform: scale(1.1);
+}
+
+.playlist-title-row:hover .edit-btn {
+    opacity: 1;
+}
+
+/* ... existing button styles ... */
+
+.remove-song-btn {
+    background: transparent;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.remove-song-btn:hover {
+    color: #e91429;
+    transform: scale(1.1);
+}
+
+.songs-table-row:hover .remove-song-btn {
+    opacity: 1;
+}

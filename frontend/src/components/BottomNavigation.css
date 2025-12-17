@@ -1,0 +1,64 @@
+/* Hidden on Desktop */
+.bottom-navigation {
+    display: none;
+}
+
+/* Mobile Only - FLOATING PILL DESIGN */
+@media (max-width: 768px) {
+    .bottom-navigation {
+        display: flex;
+        justify-content: space-evenly; /* Better spacing for pill */
+        align-items: center;
+        position: fixed;
+        bottom: 25px; /* Lift off the screen edge */
+        left: 50%; /* Center horizontally part 1 */
+        transform: translateX(-50%); /* Center horizontally part 2 */
+        width: 90%; /* Not full width */
+        max-width: 400px; /* Max width for larger phones/small tablets */
+        height: 65px; /* Compact height */
+        
+        /* Glassmorphism Pill Style */
+        background: rgba(30, 30, 30, 0.85); /* Darker, richer glass */
+        backdrop-filter: blur(25px) saturate(180%); /* Stronger blur for depth */
+        -webkit-backdrop-filter: blur(25px) saturate(180%);
+        border-radius: 35px; /* THE PILL SHAPE */
+        border: 1px solid rgba(255, 255, 255, 0.15); /* Subtle frosted border */
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); /* Deep shadow for floating effect */
+        
+        z-index: 1000;
+        padding: 0 10px; /* Side padding */
+    }
+
+    .bottom-nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        color: #8e8e93; /* Standard Apple inactive grey */
+        flex: 1;
+        height: 100%;
+        gap: 3px;
+        transition: all 0.2s cubic-bezier(0.25, 0.1, 0.25, 1); /* Smooth snap transition */
+        border-radius: 20px;
+    }
+    
+    /* subtle tap effect */
+    .bottom-nav-item:active {
+       transform: scale(0.95);
+    }
+
+    .bottom-nav-item.active {
+        color: #fa2d48; /* Brand color */
+    }
+    
+    .bottom-nav-item.active .bottom-nav-icon svg {
+        filter: drop-shadow(0 0 8px rgba(250, 45, 72, 0.4)); /* Glow effect on active icon */
+    }
+
+    .bottom-nav-label {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.2px;
+    }
+}

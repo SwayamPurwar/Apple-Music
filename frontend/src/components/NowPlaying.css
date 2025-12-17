@@ -1,0 +1,250 @@
+/* Container positioned at bottom center */
+.now-playing-container {
+    position: fixed;
+    bottom: 24px;
+    left: 260px; /* Offset for sidebar */
+    right: 0;
+    display: flex;
+    justify-content: center;
+    z-index: 1000;
+    pointer-events: none; /* Let clicks pass through outside the pill */
+}
+
+/* The Glass Pill */
+.now-playing-pill {
+    pointer-events: auto;
+    width: 100%;
+    max-width: 900px; /* Wider for better spacing */
+    height: 88px;
+    background: rgba(30, 30, 30, 0.75); /* More translucent */
+    backdrop-filter: blur(50px) saturate(200%); /* Premium glass effect */
+    -webkit-backdrop-filter: blur(50px) saturate(200%);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0,0,0,0.2);
+    
+    display: grid;
+    grid-template-columns: 250px 1fr 250px; /* Fixed sides, fluid center */
+    align-items: center;
+    padding: 0 24px;
+    transition: transform 0.2s ease;
+}
+
+/* Hover lift effect */
+.now-playing-pill:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* --- Left: Info --- */
+.np-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    overflow: hidden;
+}
+
+.np-cover {
+    width: 56px;
+    height: 56px;
+    border-radius: 8px;
+    object-fit: cover;
+    background: #222;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    transition: transform 0.3s ease;
+}
+
+.now-playing-pill:hover .np-cover {
+    transform: scale(1.05);
+}
+
+.np-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    gap: 2px;
+}
+
+.np-title {
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: 0.2px;
+}
+
+.np-artist {
+    color: #b3b3b3;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* --- Center: Controls + Progress --- */
+.np-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.np-controls {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+/* Standard Icon Buttons */
+.icon-btn {
+    background: transparent;
+    border: none;
+    color: #b3b3b3;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.icon-btn:hover {
+    color: white;
+    transform: scale(1.1);
+}
+
+.icon-btn:active {
+    transform: scale(0.95);
+}
+
+/* Main Play Button */
+.play-pause-btn {
+    background: white;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: none;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+}
+
+.play-pause-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 15px rgba(255, 255, 255, 0.3);
+}
+
+.play-pause-btn:active {
+    transform: scale(0.95);
+}
+
+.play-pause-btn svg {
+    fill: black;
+    margin-left: 2px; /* Visual center fix for play icon */
+}
+
+.play-pause-btn.playing svg {
+    margin-left: 0; /* No offset for pause icon */
+}
+
+/* Progress Scrubber */
+.np-progress {
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.time {
+    font-size: 11px;
+    font-weight: 500;
+    color: #666;
+    width: 30px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}
+
+/* The Bar Container */
+.progress-bar-wrapper {
+    flex: 1;
+    height: 12px; /* Larger hit area */
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    group: hover;
+}
+
+.progress-bg {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+    transition: height 0.2s ease;
+}
+
+.progress-bar-wrapper:hover .progress-bg {
+    height: 6px; /* Expand on hover */
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.progress-fill {
+    height: 100%;
+    background: #cdcdcd; /* Default neutral grey */
+    border-radius: 2px;
+    width: 0%;
+    transition: background-color 0.2s ease;
+}
+
+.progress-bar-wrapper:hover .progress-fill {
+    background: var(--primary); /* Highlight color on hover */
+}
+
+/* --- Right: Volume --- */
+.np-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    color: #b3b3b3;
+    padding-right: 8px;
+}
+
+.volume-slider {
+    width: 100px;
+    height: 4px;
+    -webkit-appearance: none;
+    background: rgba(255,255,255,0.1);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+    overflow: hidden; /* For fill effect */
+}
+
+.volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 0; /* Hide thumb by default like Apple Music */
+    height: 4px;
+    box-shadow: -100px 0 0 100px #b3b3b3;
+}
+
+.volume-slider:hover::-webkit-slider-thumb {
+    box-shadow: -100px 0 0 100px white;
+}
+/* Add this to your existing NowPlaying.css */
+
+.active-control {
+    color: var(--primary) !important; /* Turns red when active */
+    opacity: 1;
+}

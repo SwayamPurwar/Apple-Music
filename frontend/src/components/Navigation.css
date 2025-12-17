@@ -1,0 +1,77 @@
+.navigation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 260px;
+    background-color: #262525;
+    border-right: 1px solid #1c1c1c;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    padding-top: 30px; /* Added spacing since dots are gone */
+    z-index: 200;
+}
+
+/* Scroll Area */
+.nav-scroll-area {
+    padding: 0 12px;
+    overflow-y: auto;
+}
+
+.nav-group {
+    margin-bottom: 24px;
+}
+
+/* Section Headers */
+.nav-header {
+    font-size: 11px;
+    font-weight: 700;
+    color: #8a8a8a;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    padding-left: 12px;
+    letter-spacing: 0.02em;
+}
+
+/* Nav Items */
+.nav-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 6px;
+    color: #cccccc; /* Unselected Text Color */
+    text-decoration: none;
+    transition: all 0.1s ease-out;
+    height: 40px; /* Fixed height for consistency */
+}
+
+.nav-item:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: white;
+}
+
+.nav-item.active {
+    background-color: rgba(60, 60, 60, 0.6);
+    color: #fa2d48; /* Active Red */
+}
+
+.nav-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    margin-right: 12px;
+    opacity: 0.9;
+}
+
+.nav-item.active .nav-icon {
+    color: #fa2d48;
+    opacity: 1;
+}
+
+.nav-label {
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+}
