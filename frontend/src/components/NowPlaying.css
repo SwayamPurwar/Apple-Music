@@ -1,60 +1,42 @@
-/* Container positioned at bottom center */
+/* --- DESKTOP STYLES --- */
 .now-playing-container {
     position: fixed;
-    bottom: 24px;
-    left: 260px; /* Offset for sidebar */
+    bottom: 0;
+    left: 260px; /* Sidebar width */
     right: 0;
-    display: flex;
-    justify-content: center;
     z-index: 1000;
-    pointer-events: none; /* Let clicks pass through outside the pill */
+    padding: 20px;
 }
 
-/* The Glass Pill */
 .now-playing-pill {
-    pointer-events: auto;
-    width: 100%;
-    max-width: 900px; /* Wider for better spacing */
-    height: 88px;
-    background: rgba(30, 30, 30, 0.75); /* More translucent */
-    backdrop-filter: blur(50px) saturate(200%); /* Premium glass effect */
-    -webkit-backdrop-filter: blur(50px) saturate(200%);
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0,0,0,0.2);
-    
+    background: rgba(28, 28, 30, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 0 20px;
+    height: 80px;
     display: grid;
-    grid-template-columns: 250px 1fr 250px; /* Fixed sides, fluid center */
+    grid-template-columns: 1fr 2fr 1fr;
     align-items: center;
-    padding: 0 24px;
-    transition: transform 0.2s ease;
+    max-width: 1200px;
+    margin: 0 auto;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
 }
 
-/* Hover lift effect */
-.now-playing-pill:hover {
-    border-color: rgba(255, 255, 255, 0.15);
-}
-
-/* --- Left: Info --- */
+/* 1. Left Section (Info) */
 .np-left {
     display: flex;
     align-items: center;
-    gap: 16px;
-    overflow: hidden;
+    gap: 15px;
 }
 
 .np-cover {
     width: 56px;
     height: 56px;
-    border-radius: 8px;
+    border-radius: 6px;
     object-fit: cover;
-    background: #222;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-    transition: transform 0.3s ease;
-}
-
-.now-playing-pill:hover .np-cover {
-    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
 .np-info {
@@ -62,36 +44,32 @@
     flex-direction: column;
     justify-content: center;
     overflow: hidden;
-    gap: 2px;
 }
 
 .np-title {
     color: white;
-    font-size: 14px;
     font-weight: 600;
+    font-size: 15px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    letter-spacing: 0.2px;
 }
 
 .np-artist {
-    color: #b3b3b3;
-    font-size: 12px;
-    font-weight: 500;
+    color: #a0a0a0;
+    font-size: 13px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-/* --- Center: Controls + Progress --- */
+/* 2. Center Section (Controls) */
 .np-center {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    width: 100%;
 }
 
 .np-controls {
@@ -100,151 +78,200 @@
     gap: 24px;
 }
 
-/* Standard Icon Buttons */
 .icon-btn {
-    background: transparent;
+    background: none;
     border: none;
-    color: #b3b3b3;
+    color: #a0a0a0;
     cursor: pointer;
+    transition: color 0.2s;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s ease;
-    padding: 0;
 }
 
-.icon-btn:hover {
-    color: white;
-    transform: scale(1.1);
-}
+.icon-btn:hover { color: white; }
+.active-control { color: #fa2d48 !important; }
 
-.icon-btn:active {
-    transform: scale(0.95);
-}
-
-/* Main Play Button */
 .play-pause-btn {
     background: white;
+    color: black;
+    border: none;
+    border-radius: 50%;
     width: 38px;
     height: 38px;
-    border-radius: 50%;
-    border: none;
-    color: black;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+    transition: transform 0.1s;
+    box-shadow: 0 2px 8px rgba(255,255,255,0.2);
 }
 
-.play-pause-btn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 15px rgba(255, 255, 255, 0.3);
-}
+.play-pause-btn:hover { transform: scale(1.05); }
+.play-pause-btn:active { transform: scale(0.95); }
 
-.play-pause-btn:active {
-    transform: scale(0.95);
-}
-
-.play-pause-btn svg {
-    fill: black;
-    margin-left: 2px; /* Visual center fix for play icon */
-}
-
-.play-pause-btn.playing svg {
-    margin-left: 0; /* No offset for pause icon */
-}
-
-/* Progress Scrubber */
 .np-progress {
-    width: 100%;
-    max-width: 500px;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
+    width: 100%;
+    max-width: 400px;
 }
 
 .time {
+    color: #888;
     font-size: 11px;
-    font-weight: 500;
-    color: #666;
-    width: 30px;
-    text-align: center;
-    font-variant-numeric: tabular-nums;
+    font-family: monospace;
+    width: 35px;
 }
 
-/* The Bar Container */
 .progress-bar-wrapper {
     flex: 1;
-    height: 12px; /* Larger hit area */
+    height: 12px;
     display: flex;
     align-items: center;
     cursor: pointer;
-    group: hover;
 }
 
 .progress-bg {
     width: 100%;
     height: 4px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255,255,255,0.2);
     border-radius: 2px;
-    position: relative;
     overflow: hidden;
-    transition: height 0.2s ease;
-}
-
-.progress-bar-wrapper:hover .progress-bg {
-    height: 6px; /* Expand on hover */
-    background: rgba(255, 255, 255, 0.2);
 }
 
 .progress-fill {
     height: 100%;
-    background: #cdcdcd; /* Default neutral grey */
+    background: #a0a0a0;
     border-radius: 2px;
-    width: 0%;
-    transition: background-color 0.2s ease;
 }
 
-.progress-bar-wrapper:hover .progress-fill {
-    background: var(--primary); /* Highlight color on hover */
-}
+.progress-bar-wrapper:hover .progress-fill { background: #fa2d48; }
 
-/* --- Right: Volume --- */
+/* 3. Right Section (Volume) */
 .np-right {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 12px;
-    color: #b3b3b3;
-    padding-right: 8px;
+    gap: 10px;
 }
 
 .volume-slider {
-    width: 100px;
+    width: 80px;
     height: 4px;
     -webkit-appearance: none;
-    background: rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.2);
     border-radius: 2px;
     outline: none;
-    cursor: pointer;
-    overflow: hidden; /* For fill effect */
 }
 
 .volume-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 0; /* Hide thumb by default like Apple Music */
-    height: 4px;
-    box-shadow: -100px 0 0 100px #b3b3b3;
+    width: 12px;
+    height: 12px;
+    background: white;
+    border-radius: 50%;
+    cursor: pointer;
 }
 
-.volume-slider:hover::-webkit-slider-thumb {
-    box-shadow: -100px 0 0 100px white;
-}
-/* Add this to your existing NowPlaying.css */
+/* --- FIXED MOBILE ALIGNMENT --- */
+@media (max-width: 768px) {
+    .now-playing-container {
+        position: fixed !important;
+        
+        /* 1. Force absolute centering relative to the PHONE SCREEN */
+        left: 0 !important;
+        right: 0 !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        
+        /* 2. Set distinct width */
+        width: 90% !important; 
+        max-width: 400px !important;
+        
+        /* 3. Position above Bottom Nav */
+        /* If your nav is 60-80px tall, 95px is safe */
+        bottom: 95px !important; 
+        
+        /* 4. Reset desktop padding/background */
+        padding: 0 !important;
+        background: transparent !important;
+        z-index: 9999 !important;
+        display: block !important;
+    }
 
-.active-control {
-    color: var(--primary) !important; /* Turns red when active */
-    opacity: 1;
+    .now-playing-pill {
+        /* Reset margins/transforms */
+        margin: 0 !important;
+        transform: none !important;
+        
+        /* Visuals */
+        height: 56px;
+        padding: 0 16px;
+        background: rgba(30, 30, 30, 0.95);
+        backdrop-filter: blur(40px) saturate(180%);
+        -webkit-backdrop-filter: blur(40px) saturate(180%);
+        border-radius: 30px; /* Pill shape */
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        
+        /* Flex Alignment */
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        
+        /* Reset Grid from Desktop */
+        grid-template-columns: none !important;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* --- KEEP THE REST OF THE INNER STYLES (Content) --- */
+    
+    /* Left: Art + Text */
+    .np-left { flex: 1; min-width: 0; padding-right: 10px; gap: 10px; }
+    .np-cover { width: 40px; height: 40px; border-radius: 50%; display: block; }
+    .np-info { align-items: flex-start; gap: 2px; }
+    .np-title { font-size: 13px; font-weight: 600; margin: 0; }
+    .np-artist { font-size: 11px; color: #aaa; }
+    .np-info .icon-btn-small { display: none; }
+
+    /* Center: Buttons */
+    .np-center { width: auto; flex: 0 0 auto; display: flex !important; }
+    .np-controls { gap: 12px; display: flex; align-items: center; }
+    
+    /* Hide Extra Buttons */
+    .np-controls .icon-btn:nth-child(1),
+    .np-controls .icon-btn:nth-child(2),
+    .np-controls .icon-btn:nth-child(5) { display: none !important; }
+
+    /* Play Button */
+    .play-pause-btn {
+        width: 32px; height: 32px;
+        background: white; border-radius: 50%;
+        color: black; display: flex;
+        align-items: center; justify-content: center;
+        margin: 0; padding: 0;
+    }
+    .play-pause-btn svg { width: 16px; height: 16px; fill: black; }
+
+    /* Next Button */
+    .np-controls .icon-btn:nth-child(4) {
+        display: flex !important; color: white; opacity: 1; margin: 0;
+    }
+    .np-controls .icon-btn:nth-child(4) svg { width: 24px; height: 24px; }
+
+    /* Progress Bar */
+    .np-progress {
+        position: absolute; bottom: 0; left: 20px; width: calc(100% - 40px); height: 2px; gap: 0;
+    }
+    .time { display: none !important; }
+    .progress-bar-wrapper { height: 2px; background: transparent; padding: 0; }
+    .progress-bg { height: 2px; background: rgba(255,255,255,0.1); }
+    .progress-fill { border-radius: 0; background: #fa2d48; }
+
+    /* Right: Hide */
+    .np-right { display: none !important; }
 }
