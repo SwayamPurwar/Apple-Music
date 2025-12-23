@@ -5,6 +5,7 @@ import playlistRoutes from "./routes/playlist.routes.js"
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import path from 'path'; // Add this if needed
+import albumRoutes from "./routes/album.routes.js"
 const app = express();
 app.use(cors({
     origin:"http://localhost:5173",
@@ -27,7 +28,7 @@ app.use('/auth',authRoutes)
 /* GET /songs/search-songs */
 app.use('/songs', songRoutes);
 app.use('/playlists', playlistRoutes);
-
+app.use('/albums', albumRoutes);
 
 
 export default app;

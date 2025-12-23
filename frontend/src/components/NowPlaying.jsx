@@ -11,6 +11,8 @@ import {
     selectIsShuffle,
     selectIsRepeat 
 } from '../redux/features/songSlice';
+// 1. IMPORT SERVICE
+import { toggleDownload, isSongDownloaded } from '../services/downloadService';
 import './NowPlaying.css';
 
 const NowPlaying = () => {
@@ -20,13 +22,21 @@ const NowPlaying = () => {
     const isShuffle = useSelector(selectIsShuffle);
     const isRepeat = useSelector(selectIsRepeat);
     
-    // Audio Reference & Local State
+    // 2. DOWNLOAD STATE
+    const [isDownloaded, setIsDownloaded] = useState(false);
+
     const audioRef = useRef(null);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
     const [volume, setVolume] = useState(1);
 
-    // Play/Pause Effect
+    // 3. CHECK DOWNLOAD STATUS ON SONG CHANGE
+    useEffect(() => {
+        if (currentSong) {
+            setIsDownloaded(isSongDownloaded(currentSong._id));
+        }
+    }, [currentSong]);
+
     useEffect(() => {
         if (audioRef.current) {
             if (isPlaying) {
@@ -37,14 +47,19 @@ const NowPlaying = () => {
         }
     }, [isPlaying, currentSong]);
 
-    // Volume Effect
     useEffect(() => {
         if(audioRef.current){
             audioRef.current.volume = volume;
         }
     }, [volume]);
 
-    // Handlers
+    // 4. HANDLE DOWNLOAD
+    const handleDownloadClick = () => {
+        if (!currentSong) return;
+        toggleDownload(currentSong);
+        setIsDownloaded(!isDownloaded); // Toggle local state
+    };
+
     const handleTimeUpdate = () => {
         if (audioRef.current) setCurrentTime(audioRef.current.currentTime);
     };
@@ -56,7 +71,6 @@ const NowPlaying = () => {
         }
     };
 
-    // Auto-play next song when current one ends
     const handleSongEnd = () => {
         if (isRepeat) {
             if(audioRef.current) {
@@ -105,7 +119,22 @@ const NowPlaying = () => {
                 <div className="np-left">
                     <img src={currentSong.poster || currentSong.image} alt="" className="np-cover" />
                     <div className="np-info">
-                        <div className="np-title">{currentSong.title}</div>
+                        <div className="np-title">
+                            {currentSong.title}
+                            {/* 5. ADD DOWNLOAD ICON NEXT TO TITLE */}
+                            <button 
+                                className="icon-btn-small" 
+                                onClick={handleDownloadClick}
+                                style={{marginLeft: '8px', cursor: 'pointer', background: 'none', border: 'none', color: isDownloaded ? '#fa2d48' : '#888'}}
+                                title="Download"
+                            >
+                                {isDownloaded ? (
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 13h2v-6h-2v6zm1-8c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path></svg>
+                                ) : (
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                )}
+                            </button>
+                        </div>
                         <div className="np-artist">{currentSong.artist}</div>
                     </div>
                 </div>
@@ -113,21 +142,17 @@ const NowPlaying = () => {
                 {/* CENTER */}
                 <div className="np-center">
                     <div className="np-controls">
-                        {/* Shuffle Button */}
                         <button 
                             className={`icon-btn ${isShuffle ? 'active-control' : ''}`} 
                             onClick={() => dispatch(toggleShuffle())}
-                            title="Shuffle"
                         >
                             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline><line x1="15" y1="15" x2="21" y2="21"></line><line x1="4" y1="4" x2="9" y2="9"></line></svg>
                         </button>
 
-                        {/* Prev Button */}
                         <button className="icon-btn" onClick={() => dispatch(playPreviousSong())}>
                             <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
                         </button>
                         
-                        {/* Play/Pause Button */}
                         <button 
                             className={`play-pause-btn ${isPlaying ? 'playing' : ''}`} 
                             onClick={() => dispatch(togglePlayPause())}
@@ -139,16 +164,13 @@ const NowPlaying = () => {
                             )}
                         </button>
 
-                        {/* Next Button */}
                         <button className="icon-btn" onClick={() => dispatch(playNextSong())}>
                             <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
                         </button>
 
-                        {/* Repeat Button */}
                         <button 
                             className={`icon-btn ${isRepeat ? 'active-control' : ''}`} 
                             onClick={() => dispatch(toggleRepeat())}
-                            title="Repeat"
                         >
                             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>
                         </button>

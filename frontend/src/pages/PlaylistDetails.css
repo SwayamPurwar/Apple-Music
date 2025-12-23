@@ -214,3 +214,265 @@
 .songs-table-row:hover .remove-song-btn {
     opacity: 1;
 }
+.playlist-details-section {
+    padding-bottom: 120px;
+    color: white;
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #1e1e1e 0%, #121212 100%);
+}
+
+/* HERO SECTION */
+.playlist-hero {
+    display: flex;
+    align-items: flex-end;
+    gap: 32px;
+    padding: 40px;
+    background: linear-gradient(to bottom, rgba(50, 50, 50, 0.8), rgba(18, 18, 18, 1));
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.playlist-cover-shadow {
+    width: 232px;
+    height: 232px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    border-radius: 12px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.playlist-cover-shadow img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.playlist-meta {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 232px;
+}
+
+.playlist-type {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #fa2d48; /* Apple accent color */
+    margin-bottom: 8px;
+}
+
+.playlist-title-lg {
+    font-size: 48px; /* Bigger title */
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 0 0 16px 0;
+    letter-spacing: -1px;
+}
+
+.playlist-desc {
+    font-size: 15px;
+    color: #a0a0a0;
+    margin-bottom: 8px;
+    max-width: 600px;
+}
+
+.playlist-stats {
+    font-size: 14px;
+    color: #fff;
+    font-weight: 500;
+}
+
+/* Actions Bar */
+.playlist-actions {
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.play-big-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: #fa2d48;
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(250, 45, 72, 0.4);
+    transition: transform 0.2s ease;
+}
+
+.play-big-btn:hover {
+    transform: scale(1.05);
+    background-color: #d41c36;
+}
+
+/* Songs Table */
+.songs-table {
+    padding: 0 40px;
+}
+
+.songs-table-row {
+    display: grid;
+    grid-template-columns: 50px 4fr 3fr 1fr; /* Better column sizing */
+    align-items: center;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.songs-table-row:hover {
+    background-color: rgba(255,255,255,0.08);
+}
+
+.songs-table-row:last-child {
+    border-bottom: none;
+}
+
+.td-index {
+    color: #888;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+}
+
+.play-icon { display: none; color: white; }
+.songs-table-row:hover .index-num { display: none; }
+.songs-table-row:hover .play-icon { display: block; }
+
+.td-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 500;
+    color: white;
+}
+
+.table-poster {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.td-artist {
+    color: #aaa;
+    font-size: 14px;
+}
+
+.td-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .playlists-header-wrapper { display: none; } /* Use MobileHeader instead */
+    .playlists-section { padding: 80px 16px 100px 16px; }
+    
+    .playlist-hero {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+    }
+    
+    .playlist-meta {
+        height: auto;
+        align-items: center;
+    }
+
+    .songs-table { padding: 0 10px; }
+    .songs-table-row { grid-template-columns: 40px 1fr 50px; } /* Hide artist on mobile if tight */
+    .td-artist { display: none; }
+}
+/* ... [Existing CSS code] ... */
+
+/* --- ADD THIS AT THE BOTTOM --- */
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .playlist-details-section {
+        padding: 20px 16px 100px 16px; /* Reduce padding */
+    }
+
+    /* Stack Hero Section Vertically */
+    .playlist-hero {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .playlist-cover-lg {
+        width: 200px;
+        height: 200px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+    }
+
+    .playlist-meta {
+        align-items: center;
+        width: 100%;
+    }
+
+    .playlist-title-lg {
+        font-size: 32px; /* Smaller title */
+        margin-bottom: 8px;
+        word-wrap: break-word; /* Prevent overflow */
+        line-height: 1.2;
+    }
+
+    .playlist-desc {
+        font-size: 13px;
+        max-width: 90%;
+        margin-bottom: 12px;
+    }
+
+    /* Adjust Action Buttons */
+    .playlist-actions {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    /* Simplify Song Table Grid for Mobile */
+    /* Layout: Index | Title+Artist | Action */
+    .songs-table-header {
+        display: none; /* Hide header on mobile */
+    }
+
+    .songs-table-row {
+        grid-template-columns: 30px 1fr 40px; /* Simplified columns */
+        padding: 12px 0;
+        gap: 10px;
+    }
+
+    /* Hide complex columns on mobile */
+    /* Assuming child 3 is Artist/Album and child 4 is Date/Duration based on your desktop grid */
+    .songs-table-row > *:nth-child(3), 
+    .songs-table-row > *:nth-child(4) { 
+        display: none; 
+    }
+
+    /* Ensure Title column displays correctly */
+    .td-title {
+        font-size: 14px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    .td-title span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 200px; /* Limit text width */
+    }
+}

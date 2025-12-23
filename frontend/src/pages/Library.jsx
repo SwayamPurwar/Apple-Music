@@ -8,7 +8,7 @@ const Library = () => {
 
     const libraryItems = [
         { id: 'playlists', label: 'Playlists', icon: 'list-music', path: '/playlists' },
-        { id: 'artists', label: 'Artists', icon: 'mic', path: '/artists' }, // You can create these pages later
+        { id: 'artists', label: 'Artists', icon: 'mic', path: '/artists' },
         { id: 'albums', label: 'Albums', icon: 'album', path: '/albums' },
         { id: 'songs', label: 'Songs', icon: 'music', path: '/songs' },
         { id: 'downloaded', label: 'Downloaded', icon: 'download', path: '/downloaded' },
@@ -27,7 +27,8 @@ const Library = () => {
 
     return (
         <section className="library-section">
-            <MobileHeader title="Library" rightElement={<span className="edit-btn-text">Edit</span>} />
+            {/* UPDATED: Removed rightElement prop to show default Profile Avatar */}
+            <MobileHeader title="Library" />
 
             <div className="library-menu">
                 {libraryItems.map((item) => (

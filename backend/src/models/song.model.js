@@ -17,6 +17,11 @@ const songSchema = new mongoose.Schema({
     audio:{
         type:String,
         required:true,
+    },
+    album: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Album',
+        default: null
     }
 })
 

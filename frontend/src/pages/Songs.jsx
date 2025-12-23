@@ -6,10 +6,15 @@ import { Link } from 'react-router-dom';
 import './Songs.css';
 import AddToPlaylistModal from '../components/AddToPlaylistModal';
 import SuccessPopup from '../components/SuccessPopup';
+// 1. IMPORT DOWNLOAD SERVICE
+import { toggleDownload, getDownloadedSongs } from '../services/downloadService';
 
 const Songs = () => {
     const [songs, setSongs] = useState([]);
-    const [likedSongIds, setLikedSongIds] = useState(new Set()); // Track liked IDs
+    const [likedSongIds, setLikedSongIds] = useState(new Set());
+    // 2. STATE FOR DOWNLOADS
+    const [downloadedIds, setDownloadedIds] = useState(new Set());
+    
     const [searchTerm, setSearchTerm] = useState('');
     const [showModal, setShowModal] = useState(false);
     const [selectedSong, setSelectedSong] = useState(null);
@@ -18,10 +23,10 @@ const Songs = () => {
     const dispatch = useDispatch();
     const currentSong = useSelector(selectCurrentSong);
 
-    // 1. Fetch Songs AND Liked Songs on mount
     useEffect(() => {
         fetchSongs();
         fetchLikedSongs();
+        fetchDownloadedSongs(); // <--- CALL THIS
     }, []);
 
     const fetchSongs = () => {
@@ -33,38 +38,48 @@ const Songs = () => {
     const fetchLikedSongs = () => {
         axios.get("http://localhost:3000/songs/liked-songs", { withCredentials: true })
             .then(res => {
-                // Convert array of objects to a Set of IDs for fast lookup
                 const ids = new Set(res.data.likedSongs.map(s => s._id));
                 setLikedSongIds(ids);
             })
-            .catch(err => console.error("Error fetching liked songs:", err));
+            .catch(err => console.error(err));
+    };
+
+    // 3. FETCH DOWNLOADED SONGS
+    const fetchDownloadedSongs = () => {
+        const localSongs = getDownloadedSongs();
+        const ids = new Set(localSongs.map(s => s._id));
+        setDownloadedIds(ids);
     };
 
     const handlePlaySong = (song) => {
         dispatch(playFromContext({ song, list: songs }));
     };
 
-    // --- 2. NEW LIKE FUNCTION ---
     const handleToggleLike = (e, songId) => {
         e.stopPropagation();
-        
-        // Optimistic UI Update (Change icon immediately)
         const isLiked = likedSongIds.has(songId);
         const newLikedIds = new Set(likedSongIds);
-        if (isLiked) {
-            newLikedIds.delete(songId);
-        } else {
-            newLikedIds.add(songId);
-        }
+        if (isLiked) newLikedIds.delete(songId);
+        else newLikedIds.add(songId);
         setLikedSongIds(newLikedIds);
 
-        // API Call
         axios.post("http://localhost:3000/songs/like", { songId }, { withCredentials: true })
-            .catch(err => {
-                console.error("Error liking song:", err);
-                // Revert if API fails
-                setLikedSongIds(likedSongIds); 
-            });
+            .catch(err => setLikedSongIds(likedSongIds));
+    };
+
+    // 4. HANDLE DOWNLOAD TOGGLE
+    const handleToggleDownload = (e, song) => {
+        e.stopPropagation();
+        toggleDownload(song); // Save to local storage
+
+        // Update UI
+        const newSet = new Set(downloadedIds);
+        if (newSet.has(song._id)) {
+            newSet.delete(song._id);
+        } else {
+            newSet.add(song._id);
+        }
+        setDownloadedIds(newSet);
     };
 
     const handleDelete = (e, songId) => {
@@ -72,10 +87,8 @@ const Songs = () => {
         if(!window.confirm("Are you sure you want to delete this song?")) return;
 
         axios.delete(`http://localhost:3000/songs/${songId}`, { withCredentials: true })
-            .then(() => {
-                setSongs(songs.filter(s => s._id !== songId));
-            })
-            .catch(err => alert("Error deleting song"));
+            .then(() => setSongs(songs.filter(s => s._id !== songId)))
+            .catch(() => alert("Error deleting song"));
     };
 
     const handleAddToPlaylist = (e, song) => {
@@ -108,10 +121,7 @@ const Songs = () => {
                 <AddToPlaylistModal 
                     song={selectedSong} 
                     onClose={() => setShowModal(false)}
-                    onSuccess={() => {
-                        setShowModal(false);
-                        setShowPopup(true);
-                    }}
+                    onSuccess={() => { setShowModal(false); setShowPopup(true); }}
                 />
             )}
 
@@ -126,6 +136,7 @@ const Songs = () => {
                 <div className="songs-table-body">
                     {filteredSongs.map((song, index) => {
                         const isLiked = likedSongIds.has(song._id);
+                        const isDownloaded = downloadedIds.has(song._id); // CHECK STATUS
 
                         return (
                             <div 
@@ -156,18 +167,30 @@ const Songs = () => {
                                 </div>
 
                                 <div className="td-actions">
-                                    {/* 3. LIKE BUTTON ADDED HERE */}
                                     <button 
                                         className="action-btn" 
                                         onClick={(e) => handleToggleLike(e, song._id)} 
                                         title={isLiked ? "Unlike" : "Like"}
                                     >
                                         {isLiked ? (
-                                            /* Filled Heart (Red) */
                                             <svg viewBox="0 0 24 24" width="20" height="20" fill="#fa2d48" stroke="none"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
                                         ) : (
-                                            /* Outline Heart */
                                             <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                                        )}
+                                    </button>
+
+                                    {/* 5. DOWNLOAD BUTTON */}
+                                    <button 
+                                        className="action-btn" 
+                                        onClick={(e) => handleToggleDownload(e, song)} 
+                                        title={isDownloaded ? "Remove Download" : "Download"}
+                                    >
+                                        {isDownloaded ? (
+                                             /* Filled Circle with Arrow (Downloaded) */
+                                            <svg viewBox="0 0 24 24" width="20" height="20" fill="#fa2d48" stroke="#fa2d48" strokeWidth="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 13h2v-6h-2v6zm1-8c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path><polyline points="8 12 12 16 16 12" stroke="#fff" strokeWidth="2" fill="none"></polyline><line x1="12" y1="8" x2="12" y2="16" stroke="#fff" strokeWidth="2"></line></svg>
+                                        ) : (
+                                            /* Outline Download Icon */
+                                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                                         )}
                                     </button>
 

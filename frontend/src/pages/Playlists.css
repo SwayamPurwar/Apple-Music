@@ -1,0 +1,141 @@
+.playlists-section {
+    padding: 30px 40px;
+    padding-bottom: 120px; /* Space for player */
+    color: white;
+    min-height: 100vh;
+}
+
+.playlists-header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 15px;
+}
+
+.playlists-header h1 {
+    font-size: 34px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    letter-spacing: -0.5px;
+}
+
+.playlists-header p {
+    color: #a1a1a1;
+    font-size: 15px;
+}
+
+/* Create Button */
+.create-btn-floating {
+    background-color: #fa2d48;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.create-btn-floating:hover {
+    background-color: #d41c36;
+    transform: scale(1.02);
+}
+
+/* Grid Layout */
+.playlists-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 24px;
+}
+
+/* Card Styling */
+.playlist-card {
+    background: #1c1c1e;
+    border-radius: 12px;
+    padding: 12px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    cursor: pointer;
+    position: relative;
+    group: hover;
+}
+
+.playlist-card:hover {
+    background: #2c2c2e;
+    transform: translateY(-4px);
+}
+
+.playlist-image-wrapper {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    position: relative;
+    background: linear-gradient(135deg, #333, #111); /* Fallback */
+}
+
+.playlist-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.playlist-card:hover .playlist-image-wrapper img {
+    transform: scale(1.05);
+}
+
+/* Placeholder Gradient for empty playlists */
+.placeholder-gradient {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #444, #222);
+    color: #666;
+}
+
+.playlist-info h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #fff;
+}
+
+.playlist-info p {
+    font-size: 13px;
+    color: #98989b;
+    margin: 0;
+}
+
+/* Empty State */
+.empty-state-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+    text-align: center;
+    color: #888;
+}
+
+.empty-icon {
+    margin-bottom: 20px;
+    opacity: 0.5;
+}
+
+.empty-state-container h2 {
+    color: white;
+    margin-bottom: 10px;
+}

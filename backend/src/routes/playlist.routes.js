@@ -4,26 +4,22 @@ import {
     getMyPlaylists, 
     addSongToPlaylist, 
     removeSongFromPlaylist, 
-    getPlaylistById, 
-    deletePlaylist, 
-    updatePlaylist 
+    getPlaylistById,
+    deletePlaylist, // Import this
+    updatePlaylist  // Import this
 } from '../controllers/playlist.controller.js';
-import { isAuth } from '../middlewares/isAuth.js'; // <--- Using the central middleware
+import { isAuth } from '../middlewares/isAuth.js';
 
 const router = express.Router();
 
-// 1. Apply middleware to ALL routes here
-router.use(isAuth);
+router.post('/create', isAuth, createPlaylist);
+router.get('/my-playlists', isAuth, getMyPlaylists);
+router.post('/add-song', isAuth, addSongToPlaylist);
+router.post('/remove-song', isAuth, removeSongFromPlaylist);
+router.get('/:playlistId', isAuth, getPlaylistById);
 
-// 2. Define Routes
-router.post('/create', createPlaylist);
-router.get('/my-playlists', getMyPlaylists); // <--- This is the one fetching the empty list
-router.post('/add-song', addSongToPlaylist);
-router.post('/remove-song', removeSongFromPlaylist);
-
-// 3. Dynamic routes last
-router.delete('/:id', deletePlaylist);
-router.put('/:id', updatePlaylist);
-router.get('/:playlistId', getPlaylistById); 
+// --- ADD THESE TWO ROUTES ---
+router.put('/:id', isAuth, updatePlaylist);
+router.delete('/:id', isAuth, deletePlaylist);
 
 export default router;

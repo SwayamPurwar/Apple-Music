@@ -137,3 +137,23 @@ export async function getSongsByArtist(req, res) {
         res.status(500).json({ message: "Error fetching artist songs", error });
     }
 }
+// --- NEW FUNCTION: Get All Unique Artists ---
+export async function getAllArtists(req, res) {
+    try {
+        // Aggregation pipeline to group by artist and get one image per artist
+        const artists = await songModel.aggregate([
+            {
+                $group: {
+                    _id: "$artist",
+                    poster: { $first: "$poster" }, // Take the first song's poster
+                    songCount: { $sum: 1 }         // Count how many songs they have
+                }
+            },
+            { $sort: { _id: 1 } } // Sort alphabetically
+        ]);
+
+        res.status(200).json({ artists });
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching artists", error });
+    }
+}

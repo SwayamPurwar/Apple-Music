@@ -1,23 +1,34 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilteredSongs, selectFilteredSongs, playFromContext } from '../redux/features/songSlice';
+import { useNavigate } from 'react-router-dom'; // 1. Import useNavigate
 import axios from 'axios';
 import MobileHeader from '../components/MobileHeader'; 
 import './Search.css';
 
 const Search = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate(); // 2. Initialize hook
     const filteredSongs = useSelector(selectFilteredSongs);
     const [searchQuery, setSearchQuery] = useState('');
+    const [foundUsers, setFoundUsers] = useState([]); // 3. State for Users
 
     const performSearch = (query) => {
         setSearchQuery(query);
+        
         if(query.length > 0){
-            axios.get(`http://localhost:3000/songs/search-songs?text=${query}`,{ withCredentials: true })
-            .then(res => dispatch(setFilteredSongs(res.data.songs)))
-            .catch(err => console.error(err));
+            // Fetch Songs
+            axios.get(`http://localhost:3000/songs/search-songs?text=${query}`, { withCredentials: true })
+                .then(res => dispatch(setFilteredSongs(res.data.songs)))
+                .catch(err => console.error(err));
+
+            // 4. Fetch Users
+            axios.get(`http://localhost:3000/auth/search-users?query=${query}`, { withCredentials: true })
+                .then(res => setFoundUsers(res.data.users))
+                .catch(err => console.error(err));
         } else {
             dispatch(setFilteredSongs([]));
+            setFoundUsers([]);
         }
     }
 
@@ -35,27 +46,22 @@ const Search = () => {
     return (
         <section className="search-section">
             <div className="search-container-inner">
-                
-                {/* Mobile Header (Hidden on Desktop via CSS) */}
                 <MobileHeader title="Search" />
 
-                {/* Desktop Header (Hidden on Mobile via CSS) */}
                 <div className="desktop-search-header">
                     <h1>Search</h1>
                 </div>
 
                 <div className="search-bar-sticky">
                     <div className="search-input-wrapper">
-                        {/* Icon */}
                         <svg className="search-icon-input" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                             <circle cx="11" cy="11" r="8"></circle>
                             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                         </svg>
                         
-                        {/* Input */}
                         <input 
                             type="text" 
-                            placeholder="Artists, Songs, Lyrics" 
+                            placeholder="Artists, Songs, People" 
                             value={searchQuery}
                             onChange={(e) => performSearch(e.target.value)}
                             className="search-input"
@@ -66,18 +72,71 @@ const Search = () => {
                 <div className="search-content">
                     {searchQuery ? (
                         <div className="results-container">
-                             <div className="songs-list-rows">
-                                {filteredSongs.length > 0 ? filteredSongs.map((song) => (
-                                    <div key={song._id} className="song-row" onClick={() => dispatch(playFromContext({song, list: filteredSongs}))}>
-                                        <div className="song-row-left">
-                                            <img src={song.poster} className="song-row-img" alt="" />
-                                            <div className="song-row-info">
-                                                <div className="song-row-title">{song.title}</div>
-                                                <div className="song-row-artist">{song.artist}</div>
+                            
+                            {/* 5. PEOPLE SECTION */}
+                            {foundUsers.length > 0 && (
+                                <div className="results-group">
+                                    <h3 style={{color: '#fff', fontSize: '18px', marginBottom: '10px', marginTop: '0'}}>People</h3>
+                                    <div className="people-rows">
+                                        {foundUsers.map(user => (
+                                            <div 
+                                                key={user._id} 
+                                                className="song-row" 
+                                                onClick={() => navigate(`/user/${user._id}`)} // Navigate to Public Profile
+                                                style={{cursor: 'pointer'}}
+                                            >
+                                                <div className="song-row-left">
+                                                    {/* User Avatar Circle */}
+                                                    <div style={{
+                                                        width: '42px', 
+                                                        height: '42px', 
+                                                        borderRadius: '50%', 
+                                                        background: '#fa2d48',
+                                                        color: 'white',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        fontWeight: 'bold',
+                                                        marginRight: '12px',
+                                                        fontSize: '18px'
+                                                    }}>
+                                                        {user.username.charAt(0).toUpperCase()}
+                                                    </div>
+                                                    <div className="song-row-info">
+                                                        <div className="song-row-title">{user.username}</div>
+                                                        <div className="song-row-artist">User</div>
+                                                    </div>
+                                                </div>
+                                                <div className="song-row-right">
+                                                     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#666" strokeWidth="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div style={{height: '1px', background: '#333', margin: '20px 0'}}></div>
+                                </div>
+                            )}
+
+                            {/* SONGS SECTION */}
+                            <div className="results-group">
+                                <h3 style={{color: '#fff', fontSize: '18px', marginBottom: '10px'}}>Songs</h3>
+                                <div className="songs-list-rows">
+                                    {filteredSongs.length > 0 ? filteredSongs.map((song) => (
+                                        <div key={song._id} className="song-row" onClick={() => dispatch(playFromContext({song, list: filteredSongs}))}>
+                                            <div className="song-row-left">
+                                                <img src={song.poster} className="song-row-img" alt="" />
+                                                <div className="song-row-info">
+                                                    <div className="song-row-title">{song.title}</div>
+                                                    <div className="song-row-artist">{song.artist}</div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                )) : <div className="no-results"><p>No results found.</p></div>}
+                                    )) : (
+                                        <div className="no-results" style={{color: '#888', fontStyle: 'italic'}}>
+                                            {foundUsers.length > 0 ? "No songs found." : "No results found."}
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     ) : (

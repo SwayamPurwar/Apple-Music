@@ -1,5 +1,5 @@
 import express from 'express';
-import { uploadSong, getAllSongs, toggleLike, getLikedSongs, searchSongs, deleteSong, getSongsByArtist } from '../controllers/song.controller.js';
+import { uploadSong, getAllSongs, toggleLike, getLikedSongs, searchSongs, deleteSong, getSongsByArtist,getAllArtists  } from '../controllers/song.controller.js';
 import { upload } from '../services/storage.service.js';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
@@ -25,6 +25,7 @@ router.get('/get-songs', getAllSongs);
 router.post('/like', toggleLike);
 router.get('/liked-songs', getLikedSongs);
 router.get('/search-songs', searchSongs);
+router.get('/get-artists', getAllArtists);
 router.delete('/:id', deleteSong);
 
 // NEW ROUTE

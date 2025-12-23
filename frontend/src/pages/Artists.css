@@ -1,0 +1,54 @@
+.artists-section {
+    padding: 20px;
+    padding-bottom: 120px;
+    color: white;
+}
+
+.artists-header h1 {
+    font-size: 34px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.artists-header p {
+    color: #a1a1a1;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.artists-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 20px;
+}
+
+.artist-card {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    text-align: center;
+}
+
+.artist-card:hover {
+    transform: scale(1.02);
+}
+
+.artist-image-wrapper {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%; /* Circle shape for artists */
+    overflow: hidden;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.artist-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.artist-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+}

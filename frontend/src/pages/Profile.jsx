@@ -2,20 +2,20 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import MobileHeader from '../components/MobileHeader';
+import EditProfileModal from '../components/EditProfileModal'; // Import
 import './Profile.css';
 
 const Profile = () => {
     const [user, setUser] = useState(null);
     const [playlists, setPlaylists] = useState([]);
+    const [showEditModal, setShowEditModal] = useState(false); // State for modal
     const navigate = useNavigate();
 
     useEffect(() => {
-        // 1. Fetch User Details
         axios.get("http://localhost:3000/auth/me", { withCredentials: true })
             .then(res => setUser(res.data.user))
             .catch(() => navigate('/login'));
 
-        // 2. Fetch User Playlists for the grid
         axios.get("http://localhost:3000/playlists/my-playlists", { withCredentials: true })
             .then(res => setPlaylists(res.data.playlists))
             .catch(err => console.error(err));
@@ -32,11 +32,18 @@ const Profile = () => {
 
     return (
         <section className="profile-section">
-            {/* Mobile Header (Hidden on Desktop) */}
             <MobileHeader title="Account" />
 
+            {/* --- Render Modal --- */}
+            {showEditModal && (
+                <EditProfileModal 
+                    user={user} 
+                    onClose={() => setShowEditModal(false)} 
+                    onUpdate={(updatedUser) => setUser(updatedUser)}
+                />
+            )}
+
             <div className="profile-container">
-                {/* --- 1. User Card --- */}
                 <div className="user-card">
                     <div className="avatar-large">
                         {initials}
@@ -56,25 +63,32 @@ const Profile = () => {
                         </div>
                         <div className="stat-divider"></div>
                         <div className="stat-item">
-                            <span className="stat-num">0</span>
+                            <span className="stat-num">{user.followers ? user.followers.length : 0}</span>
                             <span className="stat-label">Followers</span>
+                        </div>
+                        <div className="stat-divider"></div>
+                        <div className="stat-item">
+                            <span className="stat-num">{user.following ? user.following.length : 0}</span>
+                            <span className="stat-label">Following</span>
                         </div>
                     </div>
 
                     <div className="user-actions">
-                        <button className="btn-secondary">Edit Profile</button>
+                        {/* Update OnClick */}
+                        <button className="btn-secondary" onClick={() => setShowEditModal(true)}>
+                            Edit Profile
+                        </button>
                         <button className="btn-primary" onClick={handleLogout}>Sign Out</button>
                     </div>
                 </div>
 
-                {/* --- 2. Content Section (Playlists) --- */}
                 <div className="profile-content">
                     <h2 className="section-title">My Public Playlists</h2>
                     {playlists.length > 0 ? (
                         <div className="profile-grid">
                             {playlists.map(pl => (
                                 <div key={pl._id} className="mini-card" onClick={() => navigate(`/playlist/${pl._id}`)}>
-                                    <img src={pl.poster} alt={pl.title} />
+                                    <img src={pl.poster || "https://placehold.co/400?text=Playlist"} alt={pl.title} />
                                     <div className="mini-card-info">
                                         <span className="mini-title">{pl.title}</span>
                                         <span className="mini-sub">{pl.songs.length} Songs</span>
