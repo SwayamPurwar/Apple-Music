@@ -90,10 +90,8 @@ apple-music/
 ### Installation
 
 1. **Clone the repository:**
-   ```bash
-  git clone [https://github.com/SwayamPurwar/apple-music.git](https://github.com/SwayamPurwar/apple-music.git)
-  cd apple-music
-   ```
+
+  
 2. **Install dependencies:**
    ```bash
    cd backend
