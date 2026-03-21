@@ -178,5 +178,4 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 <p align="center">
   Built with ❤️ by Swayam Purwar
   <br/>
-  <a href="https://swayamzerodha.vercel.app/">swayamzerodha.vercel.app</a>
 </p>
