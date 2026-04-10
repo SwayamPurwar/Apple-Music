@@ -1,8 +1,11 @@
 import mongoose from 'mongoose';
-
+import config from "../config/config.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 function connectToDatabase() {
-    mongoose.connect("mongodb://localhost:27017/AppleMusicDB", )
+     mongoose
+    .connect(config.MONGODB_URL)    
     .then(() => {
         console.log("Connected to MongoDB successfully");
     })
