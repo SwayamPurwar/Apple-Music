@@ -6,7 +6,9 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import path from 'path'; // Add this if needed
 import albumRoutes from "./routes/album.routes.js"
+
 const app = express();
+
 app.use(cors({
   origin: ["http://localhost:5173", "https://swayam-apple-music.vercel.app"],
   credentials: true 
@@ -14,13 +16,12 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use('/uploads', express.static('uploads'));
+
+// REMOVED: app.use('/uploads', express.static('uploads'));
 
 /* POST /auth/register */
 /* POST /auth/login */
-app.use('/auth',authRoutes)
-
-
+app.use('/auth', authRoutes)
 
 /* POST /songs/upload */
 /* GET /songs/get-songs */
@@ -29,6 +30,5 @@ app.use('/auth',authRoutes)
 app.use('/songs', songRoutes);
 app.use('/playlists', playlistRoutes);
 app.use('/albums', albumRoutes);
-
 
 export default app;

@@ -1,5 +1,16 @@
-.env
-uploads/
+# Dependencies
 node_modules/
-dist/
-logs/   
+
+# Environment Variables (Secrets)
+.env
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Runtime files
+pids
+*.pid
+*.seed
+*.pid.lock

@@ -1,7 +1,7 @@
 import songModel from '../models/song.model.js';
 import User from '../models/user.model.js';
 import PlaylistModel from '../models/playlist.model.js';
-import { uploadFile } from '../services/storage.service.js'; // FIX: Corrected import to match export
+import { uploadFile } from '../services/storage.service.js';
 
 export async function uploadSong(req, res) {
     try {
@@ -9,8 +9,9 @@ export async function uploadSong(req, res) {
         
         let audioUrl = "";
         if (req.files && req.files.chacha && req.files.chacha[0]) {
-             // FIX: Used the correct function name: uploadFile
-             const audioResult = await uploadFile(req.files.chacha[0].path);
+             const file = req.files.chacha[0];
+             // Pass the file buffer and original name instead of a local path
+             const audioResult = await uploadFile(file.buffer, file.originalname, 'songs');
              audioUrl = audioResult.url;
         }
 
@@ -121,13 +122,9 @@ export async function deleteSong(req, res) {
     }
 }
 
-// --- NEW FUNCTION: Get Songs By Artist ---
 export async function getSongsByArtist(req, res) {
     try {
         const { name } = req.params;
-        
-        // Exact match, case-insensitive
-        // If your database has "The Weeknd" and url is "the weeknd", this works
         const songs = await songModel.find({ 
             artist: { $regex: new RegExp(`^${name}$`, 'i') } 
         });
@@ -137,19 +134,18 @@ export async function getSongsByArtist(req, res) {
         res.status(500).json({ message: "Error fetching artist songs", error });
     }
 }
-// --- NEW FUNCTION: Get All Unique Artists ---
+
 export async function getAllArtists(req, res) {
     try {
-        // Aggregation pipeline to group by artist and get one image per artist
         const artists = await songModel.aggregate([
             {
                 $group: {
                     _id: "$artist",
-                    poster: { $first: "$poster" }, // Take the first song's poster
-                    songCount: { $sum: 1 }         // Count how many songs they have
+                    poster: { $first: "$poster" },
+                    songCount: { $sum: 1 }         
                 }
             },
-            { $sort: { _id: 1 } } // Sort alphabetically
+            { $sort: { _id: 1 } } 
         ]);
 
         res.status(200).json({ artists });

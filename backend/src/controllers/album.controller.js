@@ -7,7 +7,8 @@ export async function createAlbum(req, res) {
         let bgImage = "";
 
         if (req.file) {
-            const fileResult = await uploadFile(req.file.path);
+            // Pass the buffer and filename instead of the local path
+            const fileResult = await uploadFile(req.file.buffer, req.file.originalname, 'albums');
             bgImage = fileResult.url;
         }
 
@@ -36,7 +37,6 @@ export async function getAllAlbums(req, res) {
 export async function getAlbumById(req, res) {
     try {
         const { id } = req.params;
-        // Populate the 'songs' array so we see the actual song details
         const album = await Album.findById(id).populate('songs');
         
         if (!album) return res.status(404).json({ message: "Album not found" });

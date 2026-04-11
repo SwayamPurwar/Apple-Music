@@ -1,4 +1,16 @@
-backend/.DS_Store
+# Dependency directories
+node_modules/
+
+# IDE/Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
 .DS_Store
-.DS_Store
-.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.local
