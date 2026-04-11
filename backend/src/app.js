@@ -8,8 +8,8 @@ import path from 'path'; // Add this if needed
 import albumRoutes from "./routes/album.routes.js"
 const app = express();
 app.use(cors({
-    origin:"http://localhost:5173",
-    credentials:true
+  origin: ["http://localhost:5173", "https://swayam-apple-music.vercel.app"],
+  credentials: true 
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
