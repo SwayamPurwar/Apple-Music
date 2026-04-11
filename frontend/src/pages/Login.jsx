@@ -18,7 +18,7 @@ const Login = () => {
         try {
             // 2. CHANGED: Sending the correct data to backend
             const response = await axios.post(
-                "http://localhost:3000/auth/login", 
+                `${import.meta.env.VITE_API_URL}/auth/login`,
                 { 
                     email: email, // <--- Backend expects "email"
                     password: password 

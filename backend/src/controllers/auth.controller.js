@@ -40,9 +40,9 @@ export const loginUser = async (req, res) => {
 
         // Send Cookie
         res.cookie("token", token, {
-            httpOnly: true,
-            secure: false,
-            sameSite: "lax",
+           httpOnly: true,
+    secure: true,        // CHANGED: Must be true for cross-domain HTTPS
+    sameSite: "none",
             maxAge: 7 * 24 * 60 * 60 * 1000
         });
 
