@@ -16,7 +16,7 @@ const Register = () => {
         event.preventDefault();
         
         // 2. Send 'email', 'username', and 'password' to the backend
-        axios.post("http://localhost:3000/auth/register", { 
+      axios.post(`${import.meta.env.VITE_API_URL}/auth/register`, {
             email, 
             username, 
             password 
