@@ -16,7 +16,7 @@ const Playlists = () => {
     const [isCreating, setIsCreating] = useState(false);
 
     useEffect(() => {
-        axios.get("http://localhost:3000/playlists/my-playlists", { withCredentials: true })
+       axios.get(`${import.meta.env.VITE_API_URL}/playlists/my-playlists`, { withCredentials: true })
         .then(res => dispatch(setPlaylists(res.data.playlists || [])))
         .catch(err => console.error("Error fetching playlists:", err));
     }, [dispatch]);
@@ -29,7 +29,7 @@ const Playlists = () => {
         try {
             // Pick a random gradient for the new playlist cover placeholder if you want
             const res = await axios.post(
-                "http://localhost:3000/playlists/create", 
+              `${import.meta.env.VITE_API_URL}/playlists/create`,
                 { title: newPlaylistName, description: "My custom mix" }, 
                 { withCredentials: true }
             );

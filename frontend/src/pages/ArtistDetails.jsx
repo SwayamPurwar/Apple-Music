@@ -13,7 +13,7 @@ const ArtistDetails = () => {
     useEffect(() => {
         const artistName = decodeURIComponent(name);
         
-        axios.get(`http://localhost:3000/songs/artist/${artistName}`, {
+        axios.get(`${import.meta.env.VITE_API_URL}/songs/artist/${artistName}`, {
             withCredentials: true
         })
         .then(res => setSongs(res.data.songs))

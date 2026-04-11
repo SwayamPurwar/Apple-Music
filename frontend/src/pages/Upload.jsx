@@ -24,7 +24,7 @@ const Upload = () => {
         formData.append('artist', artist);
         formData.append('chacha', document.querySelector('#_audioFile').files[0]);
 
-        axios.post('http://localhost:3000/songs/upload', formData, {
+      axios.post(`${import.meta.env.VITE_API_URL}/songs/upload`, formData, {
             withCredentials: true
         }).then(() => {
             setIsLoading(false);

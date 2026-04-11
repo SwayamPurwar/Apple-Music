@@ -13,7 +13,7 @@ const Radio = () => {
     // Fetch songs if empty (to ensure we have music to play)
     useEffect(() => {
         if (allSongs.length === 0) {
-            axios.get("http://localhost:3000/songs/get-songs", { withCredentials: true })
+          axios.get(`${import.meta.env.VITE_API_URL}/songs/get-songs`, { withCredentials: true })
                 .then(res => dispatch(setSongs(res.data.songs)));
         }
     }, [allSongs, dispatch]);

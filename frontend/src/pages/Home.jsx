@@ -10,7 +10,7 @@ const Home = () => {
     const songs = useSelector(selectSongs);
 
     useEffect(() => {
-        axios.get("http://localhost:3000/songs/get-songs", { withCredentials: true })
+        axios.get(`${import.meta.env.VITE_API_URL}/songs/get-songs`, { withCredentials: true })
         .then(res => dispatch(setSongs(res.data.songs)));
     }, [dispatch]);
 

@@ -16,17 +16,17 @@ const PublicProfile = () => {
 
     useEffect(() => {
         // 1. Fetch the Public Profile Data
-        axios.get(`http://localhost:3000/auth/user/${id}`, { withCredentials: true })
+       axios.get(`${import.meta.env.VITE_API_URL}/auth/user/${id}`, { withCredentials: true })
             .then(res => setProfileUser(res.data.user))
             .catch(() => navigate('/')); // Redirect if user not found
 
         // 2. Fetch Current User (Me) to check if I am following them
-        axios.get("http://localhost:3000/auth/me", { withCredentials: true })
+      axios.get(`${import.meta.env.VITE_API_URL}/auth/me`, { withCredentials: true })
             .then(res => setCurrentUser(res.data.user))
             .catch(err => console.error(err));
 
         // 3. Fetch User's Playlists (Optional - requires backend support)
-        // axios.get(`http://localhost:3000/playlists/user/${id}`) ...
+        // axios.get(`${import.meta.env.VITE_API_URL}/playlists/user/${id}`) ...
     }, [id, navigate]);
 
     // Check following status once both users are loaded
@@ -38,7 +38,7 @@ const PublicProfile = () => {
     }, [currentUser, profileUser]);
 
     const handleFollowToggle = () => {
-        axios.post(`http://localhost:3000/auth/follow/${id}`, {}, { withCredentials: true })
+  axios.post(`${import.meta.env.VITE_API_URL}/auth/follow/${id}`, {}, { withCredentials: true })
             .then(res => {
                 setIsFollowing(res.data.isFollowing);
                 // Update local stats for immediate feedback

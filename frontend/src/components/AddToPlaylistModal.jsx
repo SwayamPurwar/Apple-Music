@@ -7,7 +7,7 @@ const AddToPlaylistModal = ({ song, onClose, onSuccess }) => {
 
     useEffect(() => {
         // Fetch user's playlists
-        axios.get("http://localhost:3000/playlists/my-playlists", {
+axios.get(`${import.meta.env.VITE_API_URL}/playlists/my-playlists`, {
             withCredentials: true
         })
         .then(res => setPlaylists(res.data.playlists))
@@ -15,7 +15,7 @@ const AddToPlaylistModal = ({ song, onClose, onSuccess }) => {
     }, []);
 
     const handleAddToPlaylist = (playlistId) => {
-        axios.post("http://localhost:3000/playlists/add-song", {
+      axios.post(`${import.meta.env.VITE_API_URL}/playlists/add-song`, {
             playlistId,
             songId: song._id
         }, {

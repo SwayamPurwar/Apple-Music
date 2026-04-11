@@ -13,7 +13,7 @@ const EditProfileModal = ({ user, onClose, onUpdate }) => {
         setIsLoading(true);
         
         try {
-            const res = await axios.put("http://localhost:3000/auth/update", {
+       const res = await axios.put(`${import.meta.env.VITE_API_URL}/auth/update`, {
                 username
             }, {
                 withCredentials: true

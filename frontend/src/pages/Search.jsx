@@ -18,12 +18,12 @@ const Search = () => {
         
         if(query.length > 0){
             // Fetch Songs
-            axios.get(`http://localhost:3000/songs/search-songs?text=${query}`, { withCredentials: true })
+            axios.get(`${import.meta.env.VITE_API_URL}/songs/search-songs?text=${query}`, { withCredentials: true })
                 .then(res => dispatch(setFilteredSongs(res.data.songs)))
                 .catch(err => console.error(err));
 
             // 4. Fetch Users
-            axios.get(`http://localhost:3000/auth/search-users?query=${query}`, { withCredentials: true })
+           axios.get(`${import.meta.env.VITE_API_URL}/auth/search-users?query=${query}`, { withCredentials: true })
                 .then(res => setFoundUsers(res.data.users))
                 .catch(err => console.error(err));
         } else {

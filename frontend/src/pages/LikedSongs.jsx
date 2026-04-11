@@ -9,7 +9,7 @@ const LikedSongs = () => {
     const dispatch = useDispatch();
 
     const fetchLikedSongs = () => {
-        axios.get("http://localhost:3000/songs/liked-songs", {
+       axios.get(`${import.meta.env.VITE_API_URL}/songs/liked-songs`, {
             withCredentials: true
         })
         .then(res => setLikedSongs(res.data.likedSongs))
@@ -22,7 +22,7 @@ const LikedSongs = () => {
 
     const handleUnlike = (e, songId) => {
         e.stopPropagation();
-        axios.post("http://localhost:3000/songs/like", { songId }, {
+      axios.post(`${import.meta.env.VITE_API_URL}/songs/like`, { songId }, {
             withCredentials: true
         }).then(() => {
             fetchLikedSongs();

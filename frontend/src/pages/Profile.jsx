@@ -12,11 +12,11 @@ const Profile = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get("http://localhost:3000/auth/me", { withCredentials: true })
+       axios.get(`${import.meta.env.VITE_API_URL}/auth/me`, { withCredentials: true })
             .then(res => setUser(res.data.user))
             .catch(() => navigate('/login'));
 
-        axios.get("http://localhost:3000/playlists/my-playlists", { withCredentials: true })
+        axios.get(`${import.meta.env.VITE_API_URL}/playlists/my-playlists`, { withCredentials: true })
             .then(res => setPlaylists(res.data.playlists))
             .catch(err => console.error(err));
     }, [navigate]);

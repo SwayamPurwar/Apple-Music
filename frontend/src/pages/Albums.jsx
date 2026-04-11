@@ -9,7 +9,7 @@ const Albums = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get("http://localhost:3000/albums/all", { withCredentials: true })
+        axios.get(`${import.meta.env.VITE_API_URL}/albums/all`, { withCredentials: true })
         .then(response => {
             setAlbums(response.data.albums);
         })

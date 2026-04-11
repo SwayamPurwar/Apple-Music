@@ -30,13 +30,13 @@ const Songs = () => {
     }, []);
 
     const fetchSongs = () => {
-        axios.get("http://localhost:3000/songs/get-songs", { withCredentials: true })
+axios.get(`${import.meta.env.VITE_API_URL}/songs/get-songs`, { withCredentials: true })
             .then(res => setSongs(res.data.songs))
             .catch(err => console.error(err));
     };
 
     const fetchLikedSongs = () => {
-        axios.get("http://localhost:3000/songs/liked-songs", { withCredentials: true })
+        axios.get(`${import.meta.env.VITE_API_URL}/songs/liked-songs`, { withCredentials: true })
             .then(res => {
                 const ids = new Set(res.data.likedSongs.map(s => s._id));
                 setLikedSongIds(ids);
@@ -63,7 +63,7 @@ const Songs = () => {
         else newLikedIds.add(songId);
         setLikedSongIds(newLikedIds);
 
-        axios.post("http://localhost:3000/songs/like", { songId }, { withCredentials: true })
+        axios.post(`${import.meta.env.VITE_API_URL}/songs/like`, { songId }, { withCredentials: true })
             .catch(err => setLikedSongIds(likedSongIds));
     };
 
@@ -86,7 +86,7 @@ const Songs = () => {
         e.stopPropagation();
         if(!window.confirm("Are you sure you want to delete this song?")) return;
 
-        axios.delete(`http://localhost:3000/songs/${songId}`, { withCredentials: true })
+        axios.delete(`${import.meta.env.VITE_API_URL}/songs/${songId}`, { withCredentials: true })
             .then(() => setSongs(songs.filter(s => s._id !== songId)))
             .catch(() => alert("Error deleting song"));
     };

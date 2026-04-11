@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 const Protected = ({ children }) => {
     const navigate = useNavigate();
     useEffect(() => {
-        axios.get('http://localhost:3000/auth/me', {
+       axios.get(`${import.meta.env.VITE_API_URL}/auth/me`, {
             withCredentials: true
         })
             .then(response => {

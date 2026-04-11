@@ -9,7 +9,7 @@ const Artists = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get("http://localhost:3000/songs/get-artists", { withCredentials: true })
+       axios.get(`${import.meta.env.VITE_API_URL}/songs/get-artists`,{ withCredentials: true })
             .then(res => setArtists(res.data.artists))
             .catch(err => console.error(err));
     }, []);

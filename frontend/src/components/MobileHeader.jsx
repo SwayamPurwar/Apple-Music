@@ -8,7 +8,7 @@ const MobileHeader = ({ title, subTitle, rightElement }) => {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        axios.get("http://localhost:3000/auth/me", { withCredentials: true })
+        axios.get(`${import.meta.env.VITE_API_URL}/auth/me`, { withCredentials: true })
             .then(res => setUser(res.data.user))
             .catch(() => {});
     }, []);

@@ -9,7 +9,7 @@ const EditPlaylistModal = ({ playlist, onClose, onUpdate }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         
-        axios.put(`http://localhost:3000/playlists/${playlist._id}`, {
+      axios.put(`${import.meta.env.VITE_API_URL}/playlists/${playlist._id}`,{
             title,
             description: desc
         }, {

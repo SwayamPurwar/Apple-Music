@@ -11,7 +11,7 @@ const AlbumDetails = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/albums/${id}`, { withCredentials: true })
+     axios.get(`${import.meta.env.VITE_API_URL}/albums/${id}`, { withCredentials: true })
             .then(res => setAlbum(res.data.album))
             .catch(err => console.error(err));
     }, [id]);

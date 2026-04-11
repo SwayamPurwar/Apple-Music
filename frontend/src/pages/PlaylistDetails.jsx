@@ -19,12 +19,12 @@ const PlaylistDetails = () => {
     // 1. Fetch Playlist & Current User
     useEffect(() => {
         // Fetch Playlist
-        axios.get(`http://localhost:3000/playlists/${id}`, { withCredentials: true })
+       axios.get(`${import.meta.env.VITE_API_URL}/playlists/${id}`, { withCredentials: true })
             .then(res => setPlaylist(res.data.playlist))
             .catch(() => navigate('/playlists'));
 
         // Fetch User (to show Edit/Delete buttons only if owner)
-        axios.get("http://localhost:3000/auth/me", { withCredentials: true })
+        axios.get(`${import.meta.env.VITE_API_URL}/auth/me`, { withCredentials: true })
             .then(res => setCurrentUser(res.data.user))
             .catch(err => console.error(err));
     }, [id, navigate]);
@@ -39,7 +39,7 @@ const PlaylistDetails = () => {
     const handleDelete = () => {
         if (!window.confirm("Are you sure you want to delete this playlist?")) return;
 
-        axios.delete(`http://localhost:3000/playlists/${id}`, { withCredentials: true })
+      axios.delete(`${import.meta.env.VITE_API_URL}/playlists/${id}`, { withCredentials: true })
             .then(() => navigate('/playlists'))
             .catch(err => alert("Failed to delete playlist"));
     };
@@ -47,7 +47,7 @@ const PlaylistDetails = () => {
     // 4. Handle Remove Song from Playlist
     const handleRemoveSong = (e, songId) => {
         e.stopPropagation();
-        axios.post("http://localhost:3000/playlists/remove-song", {
+       axios.post(`${import.meta.env.VITE_API_URL}/playlists/remove-song`, {
             playlistId: id,
             songId: songId
         }, { withCredentials: true })
